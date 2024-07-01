@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"testing"
 
+	"github.com/laurati/api_product_user/internal/dto"
 	"github.com/laurati/api_product_user/internal/entity"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/sqlite"
@@ -17,7 +18,7 @@ func TestCreateNewProducrt(t *testing.T) {
 		t.Error(err)
 	}
 	db.AutoMigrate(&entity.Product{})
-	product, err := entity.NewProduct("Product 1", 10.00)
+	product, err := entity.NewProduct(dto.CreateProductInput{"Product 1", 10.00})
 	assert.NoError(t, err)
 	productDB := NewProduct(db)
 	err = productDB.Create(product)
@@ -32,7 +33,7 @@ func TestFinalAllProducts(t *testing.T) {
 	}
 	db.AutoMigrate(&entity.Product{})
 	for i := 1; i < 24; i++ {
-		product, err := entity.NewProduct(fmt.Sprintf("Product %d", i), rand.Float64()*100)
+		product, err := entity.NewProduct(dto.CreateProductInput{fmt.Sprintf("Product %d", i), rand.Float64() * 100})
 		assert.NoError(t, err)
 		db.Create(product)
 	}
@@ -62,7 +63,7 @@ func TestFindProductByID(t *testing.T) {
 		t.Error(err)
 	}
 	db.AutoMigrate(&entity.Product{})
-	product, err := entity.NewProduct("Product 1", 10.00)
+	product, err := entity.NewProduct(dto.CreateProductInput{"Product 1", 10.00})
 	assert.NoError(t, err)
 	db.Create(product)
 	productDB := NewProduct(db)
@@ -77,7 +78,7 @@ func TestUpdateProduct(t *testing.T) {
 		t.Error(err)
 	}
 	db.AutoMigrate(&entity.Product{})
-	product, err := entity.NewProduct("Product 1", 10.00)
+	product, err := entity.NewProduct(dto.CreateProductInput{"Product 1", 10.00})
 	assert.NoError(t, err)
 	db.Create(product)
 	productDB := NewProduct(db)
@@ -95,7 +96,7 @@ func TestDeleteProduct(t *testing.T) {
 		t.Error(err)
 	}
 	db.AutoMigrate(&entity.Product{})
-	product, err := entity.NewProduct("Product 1", 10.00)
+	product, err := entity.NewProduct(dto.CreateProductInput{"Product 1", 10.00})
 	assert.NoError(t, err)
 	db.Create(product)
 	productDB := NewProduct(db)

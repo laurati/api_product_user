@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/laurati/api_product_user/internal/dto"
 	"github.com/laurati/api_product_user/pkg/entity"
 )
 
@@ -22,11 +23,11 @@ type Product struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func NewProduct(name string, price float64) (*Product, error) {
+func NewProduct(p dto.CreateProductInput) (*Product, error) {
 	product := &Product{
 		ID:        entity.NewID(),
-		Name:      name,
-		Price:     price,
+		Name:      p.Name,
+		Price:     p.Price,
 		CreatedAt: time.Now(),
 	}
 	err := product.Validate()
