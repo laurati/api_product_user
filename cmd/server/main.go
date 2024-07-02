@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"github.com/laurati/api_product_user/configs"
 	"github.com/laurati/api_product_user/internal/entity"
 	"github.com/laurati/api_product_user/internal/infra/database"
@@ -28,8 +29,10 @@ func main() {
 
 	r := chi.NewRouter()
 
-	// r.Use(middleware.Logger)
-	// r.Use(middleware.Recoverer)
+	// logs the start and end of each request
+	r.Use(middleware.Logger)
+	// absorve panics and prints the stack trace
+	r.Use(middleware.Recoverer)
 	// r.Use(middleware.WithValue("jwt", configs.TokenAuth))
 	// r.Use(middleware.WithValue("JwtExperesIn", configs.JwtExperesIn))
 
@@ -37,10 +40,10 @@ func main() {
 		// r.Use(jwtauth.Verifier(configs.TokenAuth))
 		// r.Use(jwtauth.Authenticator)
 		r.Post("/", productHandler.CreateProduct)
-		// r.Get("/", productHandler.GetProducts)
-		// r.Get("/{id}", productHandler.GetProduct)
-		// r.Put("/{id}", productHandler.UpdateProduct)
-		// r.Delete("/{id}", productHandler.DeleteProduct)
+		r.Get("/", productHandler.GetProducts)
+		r.Get("/{id}", productHandler.GetProduct)
+		r.Put("/{id}", productHandler.UpdateProduct)
+		r.Delete("/{id}", productHandler.DeleteProduct)
 	})
 
 	http.ListenAndServe(":8000", r)
