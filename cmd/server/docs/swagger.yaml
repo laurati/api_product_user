@@ -1,0 +1,17 @@
+basePath: /
+host: localhost:8000
+info:
+  contact:
+    email: lauraecomarquez@gmail.com
+    name: Laura
+  description: Product API with auhtentication
+  termsOfService: http://swagger.io/terms/
+  title: Go API Product
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
