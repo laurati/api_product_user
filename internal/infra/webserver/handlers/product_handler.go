@@ -44,6 +44,7 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 			Message: err.Error(),
 		}
 		w.WriteHeader(http.StatusBadRequest)
+		// TODO: I can marshal to save it in a var
 		json.NewEncoder(w).Encode(msg)
 		return
 	}
