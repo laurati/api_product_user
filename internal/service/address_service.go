@@ -9,21 +9,24 @@ import (
 	"github.com/laurati/api_product_user/internal/entity"
 )
 
-func GetAddressService(cep string) *entity.Address {
+func GetAddressService(cep string) (*entity.Address, error) {
 
 	req, err := http.Get("http://viacep.com.br/ws/" + cep + "/json")
 	if err != nil {
 		log.Printf("request err %e", err)
+		return nil, err
 	}
 	defer req.Body.Close()
 	res, err := io.ReadAll(req.Body)
 	if err != nil {
 		log.Printf("response err %e", err)
+		return nil, err
 	}
 	var addressInput entity.AddressInput
 	err = json.Unmarshal(res, &addressInput)
 	if err != nil {
 		log.Printf("err parsing response %e", err)
+		return nil, err
 	}
 
 	return &entity.Address{
@@ -31,5 +34,5 @@ func GetAddressService(cep string) *entity.Address {
 		Logradouro: addressInput.Logradouro,
 		Bairro:     addressInput.Bairro,
 		Localidade: addressInput.Localidade,
-	}
+	}, nil
 }
