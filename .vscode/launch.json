@@ -12,15 +12,6 @@
             "program": "${workspaceFolder}/cmd/server/main.go",
             "cwd": "${workspaceFolder}/cmd/server",
             "envFile": "${workspaceFolder}/cmd/server/.env"
-        },
-
-        {
-            "name": "Desafio",
-            "type": "go",
-            "request": "launch",
-            "mode": "auto",
-            "program": "${workspaceFolder}/desafio/main.go",
-            "cwd": "${workspaceFolder}/desafio"
         }
     ]
 }
