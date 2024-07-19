@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -11,7 +12,9 @@ import (
 
 func GetAddressService(cep string) (*entity.Address, error) {
 
-	req, err := http.Get("http://viacep.com.br/ws/" + cep + "/json")
+	urlViaCep := fmt.Sprintf(`http://viacep.com.br/ws/%s/json`, cep)
+
+	req, err := http.Get(urlViaCep)
 	if err != nil {
 		log.Printf("request err %e", err)
 		return nil, err
